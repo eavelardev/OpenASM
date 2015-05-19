@@ -548,8 +548,6 @@ int main(int argc,char *argv[])
 
                 strcp(codigo+jmp,coddata,cdatabytes);
                 numbytes += cdatabytes;
-
-
             }else{
                 //analizo datos
                 p=auxp;
@@ -629,8 +627,6 @@ int main(int argc,char *argv[])
                 }else break;
             }else{
             //analizo valores
-
-
                 op.val1 = nn;
                 op.bin1[0] = '\0';
                 op.val2 = nn;
@@ -761,6 +757,7 @@ int main(int argc,char *argv[])
                 bool _bin2      = false;
                 bool _rev       = false;
 
+                //casos especiales
                 if(!strcmp(op.name,"ADD") && !strcmp(op.bin1,"000") && op.val1 == rb && op.val2 == ib){
                 	strcat(cmdbin,"00000100");
                 	_opcode = true;
@@ -812,11 +809,11 @@ int main(int argc,char *argv[])
                             strcat(cmdbin,"1000001111");
                         }
                     }
-				}else if(op.val1==mb)
+                }else if(op.val1==mb)
                     _rev = true;
 
-				if(!_opcode)
-                	strcat(cmdbin,pd->opcode);
+                if(!_opcode)
+                    strcat(cmdbin,pd->opcode);
 
                 if(_rev){
                     char temp[20];
@@ -825,14 +822,14 @@ int main(int argc,char *argv[])
                     strcpy(op.bin1,temp);
                 }
 
-				if(op.val1 && !_bin1)
-	                	strcat(cmdbin,op.bin1);
+                if(op.val1 && !_bin1)
+                    strcat(cmdbin,op.bin1);
 
-				if(!_bin2 && op.val1 == rw && op.val2 == ib)
-                    	memmove(op.bin2+8,"00000000\0",9);
+                if(!_bin2 && op.val1 == rw && op.val2 == ib)
+                    memmove(op.bin2+8,"00000000\0",9);
 
-				if(op.val2)
-					strcat(cmdbin,op.bin2);
+                if(op.val2)
+                    strcat(cmdbin,op.bin2);
 
                 p=cmdbin;
                 bin();
