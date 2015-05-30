@@ -121,6 +121,7 @@ t_cmddata cmddata[] = {
     {"ADD",rb,ib,"1000000011000"},
     {"ADD",rw,ib,"000"},
     {"ADD",rw,iw,"000"},
+    {"ADD",mb,ib,"1000000000000110"},
 
     {"SUB",rb,rb,"0010101011"},
     {"SUB",rw,rw,"0010101111"},
@@ -148,7 +149,7 @@ int scanasm(){
     int i=0;
     sdata[0]='\0';
     while(isblank(*p))p++;
-    while(isalnum(*p))sdata[i++]=*p++;
+    while(isalnum(*p) || *p == '_')sdata[i++]=*p++;
     sdata[i]='\0';
     if(sdata[0]=='\0')return 1;
     while(isblank(*p))p++;
@@ -257,11 +258,11 @@ int readdata(){
             else
                 coddata[cdatabytes++] = num;
             coma = false;
-        }else if(isalpha(*p) && comp == '\0' && coma){
+        }else if((isalpha(*p) || *p == '_') && comp == '\0' && coma){
             //dato
             i=0;
             sdata[0]='\0';
-            while(isalnum(*p))sdata[i++]=*p++;
+            while((isalpha(*p) || *p == '_'))sdata[i++]=*p++;
             sdata[i]='\0';
 
             for(i=0;i<idata;i++)
@@ -337,14 +338,11 @@ int chekval(int opc){
                 swap16();
                 if(opc == 1){
                     op.val1 = mb;
-                    strcpy(op.bin1,"110");
-                    strcat(op.bin1,numero);
+                    strcpy(op.bin1,numero);
                 }else{
                     op.val2 = mb;
-                    strcpy(op.bin2,"110");
-                    strcat(op.bin2,numero);
+                    strcpy(op.bin2,numero);
                 }
-
             }else{
                 if(digittobin(datos[i].var))return 1;
                 i=strlen(numero);
@@ -551,7 +549,7 @@ int main(int argc,char *argv[])
             }else{
                 //analizo datos
                 p=auxp;
-                if(isalpha(*p)){
+                if(isalpha(*p) || *p == '_'){
                     scanasm();
                     if(!idata)
                         strcpy(datos[idata].data,sdata);
@@ -640,7 +638,7 @@ int main(int argc,char *argv[])
                 if(!pd->name) break;
                 strcpy(op.name,sdata);
 
-                if(isalnum(*p)){            //Obtengo val1
+                if(isalnum(*p) || *p == '_'){            //Obtengo val1
                     if(scanasm())break;
                     for(i=0;i<8;i++)
                         if(!strcmp(sdata,regname[0][i])){
@@ -689,7 +687,7 @@ int main(int argc,char *argv[])
                     if(*p == ','){          //Obtengo val2
                         p++;
                         while(isblank(*p))p++;
-                        if(isalnum(*p)){
+                        if((isalnum(*p) || *p == '_')){
                             if(scanasm())break;
                             for(i=0;i<8;i++)
                                 if(!strcmp(sdata,regname[0][i])){
@@ -759,23 +757,22 @@ int main(int argc,char *argv[])
 
                 //casos especiales
                 if(!strcmp(op.name,"ADD") && !strcmp(op.bin1,"000") && op.val1 == rb && op.val2 == ib){
-                	strcat(cmdbin,"00000100");
-                	_opcode = true;
-                	_bin1	= true;
-				}else if(!strcmp(op.name,"SUB") && !strcmp(op.bin1,"000") && op.val1 == rb && op.val2 == ib){
+                    strcat(cmdbin,"00000100");
+                    _opcode = true;
+                    _bin1   = true;
+                }else if(!strcmp(op.name,"SUB") && !strcmp(op.bin1,"000") && op.val1 == rb && op.val2 == ib){
                     strcat(cmdbin,"00101100");
-                	_opcode = true;
-                	_bin1	= true;
-				}else if(op.val1 == rw && (!strcmp(op.name,"ADD") || !strcmp(op.name,"SUB")) &&
-                        (op.val2 == ib || op.val2 == iw)){
+                    _opcode = true;
+                    _bin1   = true;
+                }else if(op.val1 == rw && (!strcmp(op.name,"ADD") || !strcmp(op.name,"SUB")) && (op.val2 == ib || op.val2 == iw)){
                     if(!strcmp(op.bin1,"000") && !strcmp(op.name,"ADD")){
                         strcat(cmdbin,"00000101");
                         _opcode = true;
-                        _bin1	= true;
+                        _bin1   = true;
                     }else if(!strcmp(op.bin1,"000") && !strcmp(op.name,"SUB")){
                         strcat(cmdbin,"00101101");
                         _opcode = true;
-                        _bin1	= true;
+                        _bin1   = true;
                     }else{
                         int addnum = 0;
                         int addtam = strlen(op.bin2);
@@ -809,8 +806,22 @@ int main(int argc,char *argv[])
                             strcat(cmdbin,"1000001111");
                         }
                     }
-                }else if(op.val1==mb)
-                    _rev = true;
+                }else if(!strcmp(op.name,"MOV") && !strcmp(op.bin1,"000") && op.val2==mb){
+                    strcpy(cmdbin,"10100000");
+                    _opcode = true;
+                    _bin1   = true;
+                }else if(!strcmp(op.name,"MOV") && !strcmp(op.bin2,"000") && op.val1==mb){
+                    strcpy(cmdbin,"10100010");
+                    _opcode = true;
+                    _bin2   = true;
+                }else if(!strcmp(op.name,"MOV") && (op.val1==mb || op.val2==mb) ){
+                    if(op.val1 == mb){
+                        strcat(op.bin2,"110");
+                        _rev = true;
+                    }else{
+                        strcat(op.bin1,"110");
+                    }
+                }
 
                 if(!_opcode)
                     strcat(cmdbin,pd->opcode);
