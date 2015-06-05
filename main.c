@@ -10,7 +10,7 @@ que estan escritos basados en la estructura que tiene un programa que puede ser
 compilado por el Turbo Assembler, y la estructura del codigo maquina generado se basa
 en la del compilador Flat Assembler, del cual hicimos uso a travez del emu8086.
 
-El programa es compartido sin niguna restricción     Junio/2015
+El programa es compartido sin niguna restricción                        Junio/2015
 
 Autor: Eduardo Avelar Pantoja
 
