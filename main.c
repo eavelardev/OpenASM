@@ -1,12 +1,12 @@
-/* 
+/*
 Compilador de lenguaje ensamblador escrito en C, llevado a cabo durante el curso de
-Compiladores y Traductores visto en el sexto semestre de la carrera Ing. en Sistemas 
-Computacionales impartida por la Universidad de Colima en la Facultad de Ingenieria 
+Compiladores y Traductores visto en el sexto semestre de la carrera Ing. en Sistemas
+Computacionales impartida por la Universidad de Colima en la Facultad de Ingenieria
 Mecanica y Electrica por el maestro Benjamin Iglesias Cortes.
 
 El programa crea un archivo ejecutable con extensión .com, que puede ser ejecutado
 por un sistema operativo MS-DOS, o haciendo uso del emulador DosBox. Acepta programas
-que estan escritos basados en la estructura que tiene un programa que puedes ser 
+que estan escritos basados en la estructura que tiene un programa que puede ser
 compilado por el Turbo Assembler, y la estructura del codigo maquina generado se basa
 en la del compilador Flat Assembler, del cual hicimos uso a travez del emu8086.
 
@@ -18,6 +18,7 @@ Facebook: eduardo.avelar.9
 Twitter:  avelar_dev
 GitHub:   avelardev
 
+Proyecto: https://github.com/avelardev/OpenASM
 Correo electronico: eduardo_201194@hotmail.com
 
 Referencias:
@@ -858,7 +859,7 @@ int main(int argc,char *argv[])
 
     if(valret==1){
         return 0;
-    }else if(valret==2){
+    }else if(valret==2 || !zona7){
         printf("Analisis de estructura X (%d)\n",line);
         printf("Analisis de sintaxis         \n");
         printf("Compilacion                  \n");
