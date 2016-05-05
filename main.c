@@ -18,7 +18,7 @@ Facebook: eavelardev
 Twitter:  eavelardev
 GitHub:   eavelardev
 
-Proyecto: https://github.com/avelardev/OpenASM
+Proyecto: https://github.com/eavelardev/OpenASM
 Correo electronico: eavelardev@gmail.com
 
 Referencias:
