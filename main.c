@@ -19,7 +19,7 @@ Twitter:  eavelardev
 GitHub:   eavelardev
 
 Proyecto: https://github.com/avelardev/OpenASM
-Correo electronico: eavelardev.com
+Correo electronico: eavelardev@gmail.com
 
 Referencias:
 http://www.mathemainzel.info/files/x86asmref.html
