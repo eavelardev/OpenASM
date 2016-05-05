@@ -14,12 +14,12 @@ El programa es compartido sin niguna restricción                        Junio/2
 
 Autor: Eduardo Avelar Pantoja
 
-Facebook: eduardo.avelar.9
-Twitter:  avelar_dev
-GitHub:   avelardev
+Facebook: eavelardev
+Twitter:  eavelardev
+GitHub:   eavelardev
 
 Proyecto: https://github.com/avelardev/OpenASM
-Correo electronico: eduardo_201194@hotmail.com
+Correo electronico: eavelardev.com
 
 Referencias:
 http://www.mathemainzel.info/files/x86asmref.html
